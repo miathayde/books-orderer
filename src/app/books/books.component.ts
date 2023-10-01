@@ -14,6 +14,7 @@ export class BooksComponent implements OnInit {
   books: Array<Book> = new Array<Book>();
   counter: number = 0;
   sort: Sort = new Sort();
+  alert: string = "";
 
   constructor() { }
 
@@ -23,15 +24,15 @@ export class BooksComponent implements OnInit {
       {id: 2, title: 'Patterns of Enterprise Application Architecture', authorName: 'Martin Fowler', editionYear: 2002},
       {id: 3, title: 'Head First Design Patterns', authorName: 'Elisabeth Freeman', editionYear: 2004},
       {id: 4, title: 'Internet & World Wide Web: How to Program', authorName: 'Deitel & Deitel', editionYear: 2007},
-    ]
+    ];
   }
 
   /** Adiciona novo livro no array de livros para preencher a tabela*/
   addNewBook() {
     if(this.books.length > 0) this.counter = Math.max(...this.books.map(x => x.id));
     this.counter = ++this.counter;
-
-    if (this.book) {
+    
+    if (this.book && (this.book.title || this.book.authorName || this.book.editionYear)) {
       this.book.id = this.counter;
 
       this.books.push(this.book);
@@ -39,15 +40,22 @@ export class BooksComponent implements OnInit {
     }
   }
 
-  /** Ordenar de acordo com as colunas recebidas no parâmetro, e se é ascendente ou descendente*/
+  /** Verifica se o array de livros possui ao menos um livro cadastrado e 
+   * verifica se a ordenação clicada foi do tipo ascendente ou descendente*/
   orderItems(column: string, isAsc: boolean) {
-    if(isAsc) {
-      this.orderByAsc(column);
+    if (this.books.length > 0) {
+      this.alert = "";
+      if(isAsc) {
+        this.orderByAsc(column);
+      } else {
+        this.orderByDesc(column);
+      }
     } else {
-      this.orderByDesc(column);
+      this.alert = "You need to register at least one book";
     }
   }
 
+  /** Ordena a tabela de forma ascendente de acordo com a coluna da checkbox clicada*/
   orderByAsc(column: string) {
     console.log(column)
     if (column == 'author') {
@@ -62,6 +70,7 @@ export class BooksComponent implements OnInit {
     }
   }
 
+  /** Ordena a tabela de forma descendente de acordo com a coluna da checkbox clicada*/
   orderByDesc(column: string) {
     if (column == 'author') {
       this.sort.authorNameAsc = false; 
