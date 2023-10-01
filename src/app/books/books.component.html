@@ -1,7 +1,105 @@
-<div class="container-sm">
+<div class="container p-4">
     <div class="row">
-        <div class="col">
-            <p>books works!</p>
+        <div class="col d-flex justify-content-center">
+            <h2>Books Orderer</h2>
         </div>
+    </div>
+
+    <hr class="m-2">
+
+    <div class="row">
+        <div class="col-5">
+            <label for="title">Title</label>
+            <input class="form-control" id="title" name="title" type="text" 
+            placeholder="Title of book" [(ngModel)]="book.title">
+        </div>
+        <div class="col-5">
+            <label for="author">Author</label>
+            <input class="form-control" id="author" name="author" type="text" 
+            placeholder="Author of book" [(ngModel)]="book.authorName">
+        </div>
+        <div class="col-2">
+            <label for="edition">Edition Year</label>
+            <input class="form-control" id="edition" name="edition" type="number" 
+            placeholder="Edition of book" [(ngModel)]="book.editionYear">
+        </div>
+    </div>
+
+    <div class="row">
+        <div class="col d-flex justify-content-center mt-2">
+            <button class="btn btn-info" (click)="addNewBook()">Add New Book</button>
+        </div>
+    </div>
+
+    <div class="row mt-5 mb-5">
+        <div class="col-3">
+            <div class="form-check">
+                <input class="form-check-input" type="checkbox" id="titleAsc"
+                [(ngModel)]="sort.titleAsc" (click)="orderItems('title', true)">
+                <label class="form-check-label" for="titleAsc">
+                    Sort by title (ascending)
+                </label>
+            </div>
+            <div class="form-check">
+                <input class="form-check-input" type="checkbox" id="titleDesc"
+                [(ngModel)]="sort.titleDesc" (click)="orderItems('title', false)">
+                <label class="form-check-label" for="titleDesc">
+                    Sort by title (descending)
+                </label>
+            </div>
+        </div>
+        <div class="col-3">
+            <div class="form-check">
+                <input class="form-check-input" type="checkbox" id="authorNameAsc"
+                [(ngModel)]="sort.authorNameAsc" (click)="orderItems('author', true)">
+                <label class="form-check-label" for="authorNameAsc">
+                    Sort by author (ascending)
+                </label>
+            </div>
+            <div class="form-check">
+                <input class="form-check-input" type="checkbox"id="authorNameDesc"
+                [(ngModel)]="sort.authorNameDesc" (click)="orderItems('author', false)">
+                <label class="form-check-label" for="authorNameDesc">
+                    Sort by author (descending)
+                </label>
+            </div>
+        </div>
+        <div class="col-3">
+            <div class="form-check">
+                <input class="form-check-input" type="checkbox" value="" id="editionYearAsc"
+                [(ngModel)]="sort.editionYearAsc" (click)="orderItems('edition', true)">
+                <label class="form-check-label" for="editionYearAsc">
+                    Sort by edition (ascending)
+                </label>
+            </div>
+            <div class="form-check">
+                <input class="form-check-input" type="checkbox" value="" id="editionYearDesc"
+                [(ngModel)]="sort.editionYearDesc" (click)="orderItems('edition', false)">
+                <label class="form-check-label" for="editionYearDesc">
+                    Sort by edition (descending)
+                </label>
+            </div>
+        </div>
+    </div>
+
+    <div class="row">
+        <table class="table table-striped">
+            <thead>
+              <tr>
+                <th scope="col" *ngFor="let column of columns">
+                    {{ column }}
+                </th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr *ngFor="let book of books">
+                <td>
+                    {{ book.title }} 
+                </td>
+                <td>{{ book.authorName }}</td>
+                <td>{{ book.editionYear }}</td>
+              </tr>
+            </tbody>
+          </table>
     </div>
 </div>
